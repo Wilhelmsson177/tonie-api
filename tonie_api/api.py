@@ -9,14 +9,14 @@ log.addHandler(logging.NullHandler())
 
 
 class _TonieOAuth2Session(OAuth2Session):
+    """`OAuth2Session` class with some additional
+    methods useful for tonie_api.
+    """
     def __init__(self, **kwargs):
-        """``OAuth2Session`` class with some additional
-        methods useful for TonieboxAPI.
-        """
         super().__init__(**kwargs)
 
     def get_json(self, url):
-        """HTTP ``GET`` request which, if successful,
+        """HTTP `GET` request which, if successful,
         is parsed to JSON format.
         Catches HTTP errors and writes them to logger.
 
@@ -38,7 +38,7 @@ class _TonieOAuth2Session(OAuth2Session):
             return r.json()
 
     def patch_json(self, url, **kwargs):
-        """HTTP ``PATCH`` request which, if successful,
+        """HTTP `PATCH` request which, if successful,
         is parsed to JSON format.
         Catches HTTP errors and writes them to logger.
 
@@ -73,10 +73,10 @@ class _TonieAPIBase():
         dict of IDs. Create an instance for every missing
         ID. Delete instances which are no longer present.
 
-        Example: A dict of creative tonies with ``ID:properties``
+        Example: A dict of creative tonies with `ID:properties`
         retrieved from a request to the toniecloud.
-        For every tonie a ``class:CreativeTonie`` instance is
-        created and added to ``storedict`` under it's ID.
+        For every tonie a :class:`_CreativeTonie` instance is
+        created and added to `storedict` under it's ID.
 
         :param r: JSON response from HTTP request
         :type r: dict
@@ -84,7 +84,7 @@ class _TonieAPIBase():
         :type storedict: dict
         :param itemclass: class to be instantiated
         :type itemclass: class
-        :return: dict of ``ID:name``
+        :return: dict of `ID:name`
         :rtype: dict
         """
         # add only new items to dict
@@ -103,11 +103,7 @@ class _TonieAPIBase():
 
 
 class TonieAPI(_TonieAPIBase):
-    API_URL = 'https://api.tonie.cloud/v2'
-    TOKEN_URL = 'https://login.tonies.com/auth/realms/tonies/protocol/openid-connect/token'
-
-    def __init__(self, username, password):
-        """Interface to toniecloud. Authenticates and acquires
+    """Interface to toniecloud. Authenticates and acquires
         token for communication.
 
         :param username: username for login to login.tonies.com
@@ -115,6 +111,11 @@ class TonieAPI(_TonieAPIBase):
         :param password: password for login to login.tonies.com
         :type password: str
         """
+
+    API_URL = 'https://api.tonie.cloud/v2'
+    TOKEN_URL = 'https://login.tonies.com/auth/realms/tonies/protocol/openid-connect/token'
+
+    def __init__(self, username, password):
         client = LegacyApplicationClient(client_id='meine-tonies')
         self.session = _TonieOAuth2Session(client=client)
         self.session.fetch_token(
@@ -139,7 +140,7 @@ class TonieAPI(_TonieAPIBase):
     @property
     def households(self):
         """Household instances acquired by
-        ``households_update()``. Household IDs as keys.
+        :meth:`TonieAPI.households_update()`. Household IDs as keys.
 
         :return: Household instances
         :rtype: dict
@@ -148,8 +149,8 @@ class TonieAPI(_TonieAPIBase):
 
     def households_update(self):
         """Get households from toniecloud and create
-        ``class:_Household`` instance for each new household.
-        Store instances in ``households`` property.
+        :class:`_Household` instance for each new household.
+        Store instances in :meth:`TonieAPI.households` property.
 
         :return: Household ID: household name
         :rtype: dict
@@ -191,16 +192,17 @@ class TonieAPI(_TonieAPIBase):
 
 
 class _Household(_TonieAPIBase):
-    def __init__(self, API_URL, session, hhproperties):
-        """Represents Household of tonies.
+    """Represents Household of tonies.
 
-        :param API_URL: API URL
-        :type API_URL: str
-        :param session: communication session
-        :type session: class:_TonieOAuth2Session
-        :param hhproperties: initial household properties
-        :type hhproperties: dict
-        """
+    :param API_URL: API URL
+    :type API_URL: str
+    :param session: communication session
+    :type session: :class:`_TonieOAuth2Session`
+    :param hhproperties: initial household properties
+    :type hhproperties: dict
+    """
+
+    def __init__(self, API_URL, session, hhproperties):
         self.session = session
         # self.properties = hhproperties
         self.id = hhproperties['id']
@@ -221,7 +223,7 @@ class _Household(_TonieAPIBase):
     @property
     def creativetonies(self):
         """Creative tonie instances acquired by
-        ``creativetonies_update()``. Tonie IDs as keys.
+        :meth:`_Household.creativetonies_update()`. Tonie IDs as keys.
 
         :return: Creative tonie instances
         :rtype: dict
@@ -230,8 +232,8 @@ class _Household(_TonieAPIBase):
 
     def creativetonies_update(self):
         """Get creative tonies from toniecloud and create
-        ``class:_CreativeTonie`` instance for each new tonie
-        Store instances in ``creativetonies`` property.
+        :class:`_CreativeTonie` instance for each new tonie
+        Store instances in :meth:`_Household.creativetonies` property.
 
         :return: tonie ID: tonie name
         :rtype: dict
@@ -250,16 +252,16 @@ class _Household(_TonieAPIBase):
 
 
 class _CreativeTonie():
-    def __init__(self, API_URL, session, ctproperties):
-        """Represents single creative tonie.
+    """Represents single creative tonie.
 
-        :param API_URL: API URL
-        :type API_URL: str
-        :param session: communication session
-        :type session: class:_TonieOAuth2Session
-        :param hhproperties: initial tonie properties
-        :type hhproperties: dict
-        """
+    :param API_URL: API URL
+    :type API_URL: str
+    :param session: communication session
+    :type session: :class:`_TonieOAuth2Session`
+    :param hhproperties: initial tonie properties
+    :type hhproperties: dict
+    """
+    def __init__(self, API_URL, session, ctproperties):
         self.session = session
         # self._properties = ctproperties
         self.id = ctproperties['id']
@@ -322,10 +324,10 @@ class _CreativeTonie():
 
     def sort_chapters(self, sortkey, sortlist=None):
         """Sort chapters of the tonie according to specified
-        key (``'id'`` or ``'title'``). Optionally, sort according
+        key (`'id'` or `'title'`). Optionally, sort according
         to given list.
 
-        :param sortkey: key to sort list by (``'id'`` or ``'title'``)
+        :param sortkey: key to sort list by (`'id'` or `'title'`)
         :type sortkey: str
         :param sortlist: list of keys in desired order, defaults to None
         :type sortlist: list, optional
@@ -385,21 +387,21 @@ class _CreativeTonie():
 
 
 class _Chapter(dict):
+    """Chapter of content on creative tonie.
+
+    :param contentid: ID of file in toniecloud
+    :type contentid: str
+    :param title: chapter title
+    :type title: str
+    :param filename: filename on server
+    :type filename: str
+    :param seconds: duration in seconds, defaults to None
+    :type seconds: float, optional
+    :param transcoding: pending transcoding, defaults to None
+    :type transcoding: bool, optional
+    """
     def __init__(self, contentid, title, filename,
                  seconds=None, transcoding=None):
-        """Chapter of content on creative tonie.
-
-        :param contentid: ID of file in toniecloud
-        :type contentid: str
-        :param title: chapter title
-        :type title: str
-        :param filename: filename on server
-        :type filename: str
-        :param seconds: duration in seconds, defaults to None
-        :type seconds: float, optional
-        :param transcoding: pending transcoding, defaults to None
-        :type transcoding: bool, optional
-        """
         super().__init__()
         self['id'] = contentid
         self['title'] = title
