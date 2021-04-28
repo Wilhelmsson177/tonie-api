@@ -10,7 +10,7 @@ The underlying API at the Boxine servers may change at anytime.
 Introduction
 ************
 This project provides a python library to access the toniecloud via HTTP requests.
-So far it is possible to upload content to creative tonies and change the chapter order.
+So far it is possible to upload and remove content to creative tonies and change the chapter order.
 
 *******
 Example
@@ -42,6 +42,9 @@ Example
 
     # sort chapters by title
     api.households['yourHouseholdID'].creativetonies['yourTonieID'].sort_chapters('title')
+
+    # remove all chapters on creative tonie
+    api.households['yourHouseholdID'].creativetonies['yourTonieID'].remove_all_chapters()
 
 *********
 Resources
