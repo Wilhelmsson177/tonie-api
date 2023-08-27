@@ -1,0 +1,48 @@
+# Changelog
+
+## v0.1.0 (2023-08-27)
+
+### Unknown
+
+- Merge pull request #10 from wilhelmsson177/relese-template
+
+ci: fix template for commits ([`643b7df`](https://github.com/Wilhelmsson177/tonie-api/commit/643b7dfd1d52470f3e13b102414bf94dc1e920e5))
+- Merge pull request #11 from wilhelmsson177/all-contributors/add-moritzj29
+
+docs: add moritzj29 as a contributor for code, and ideas ([`712913b`](https://github.com/Wilhelmsson177/tonie-api/commit/712913b2a51f8fd98ee99ae06f182c970ecadec1))
+- Merge pull request #7 from wilhelmsson177/release-handling
+
+ci: update ci settings for release ([`e3b563e`](https://github.com/Wilhelmsson177/tonie-api/commit/e3b563ef62e29fe634e36ea3b0394c3bddd8e7f7))
+- Merge pull request #6 from wilhelmsson177/wilhelmsson177-patch-1
+
+ci: create dependabot.yml ([`44d34a3`](https://github.com/Wilhelmsson177/tonie-api/commit/44d34a3a20364e167280499f23681d4079ec776b))
+- Merge pull request #5 from wilhelmsson177/new-project-structure
+
+chore: new project structure ([`f7d4eaa`](https://github.com/Wilhelmsson177/tonie-api/commit/f7d4eaa7a5d6b411806a720831a04b2fccd8b2f6))
+- Merge pull request #3 from alexhartm/removing-chapters-on-creativetonies
+
+removing chapters from creative tonie ([`d4fc2fb`](https://github.com/Wilhelmsson177/tonie-api/commit/d4fc2fbc451c50eb37a1616bf8a91645b2a93fc4))
+- Docs ([`6da1d90`](https://github.com/Wilhelmsson177/tonie-api/commit/6da1d90e18467fd6e17f3363fd741747ab321702))
+- Remove_all_chapters of class _creativetonie ([`61e6c00`](https://github.com/Wilhelmsson177/tonie-api/commit/61e6c00d13c821bac9dea8a8d831de5ba2cee8a1))
+- Readme ([`ccf6415`](https://github.com/Wilhelmsson177/tonie-api/commit/ccf641527a3af5e4e0a8960970ae4308449cc2e6))
+- Documentation ([`dc5bbe4`](https://github.com/Wilhelmsson177/tonie-api/commit/dc5bbe4e59b60caa26e4a9fab34320d83272e54f))
+- Initial commit ([`643f42e`](https://github.com/Wilhelmsson177/tonie-api/commit/643f42e9ff4c7cc8700c2b9b17b90f86a6ec6b26))
+- Update readme.md ([`49ac180`](https://github.com/Wilhelmsson177/tonie-api/commit/49ac180627fab882289b922f3a40f1c8b34c8546))
+- Initial commit ([`b4dab81`](https://github.com/Wilhelmsson177/tonie-api/commit/b4dab8181d52206979284185a60db1b4c0c0aee2))
+
+### Documentation
+
+- Docs: create .all-contributorsrc [skip ci] ([`95ce29b`](https://github.com/Wilhelmsson177/tonie-api/commit/95ce29b562f6c6ab905405e797fda3d128a916a7))
+- Docs: update readme.md [skip ci] ([`b321890`](https://github.com/Wilhelmsson177/tonie-api/commit/b3218905e0ce3876e101e88c124592299a288d8e))
+
+### Test
+
+- Test: add test for clearing the chapter ([`86d152d`](https://github.com/Wilhelmsson177/tonie-api/commit/86d152d701b66d94ce35745366b6c3308fc2cb34))
+- Test: don&#39;t check if all api have been called ([`0a23956`](https://github.com/Wilhelmsson177/tonie-api/commit/0a239568948d8a27e43dc446a8049639fefee7f7))
+
+### Feature
+
+- Feat: refactor entire api
+
+- added unit tests (good path only yet) ([`d5489bb`](https://github.com/Wilhelmsson177/tonie-api/commit/d5489bb67ce05301683e6a973b9c23642ebefead))
+- Feat: made objects public ([`2498799`](https://github.com/Wilhelmsson177/tonie-api/commit/2498799b6d7247e21822f39614da0774cc6bf950))
