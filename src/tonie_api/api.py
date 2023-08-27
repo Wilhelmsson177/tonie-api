@@ -32,9 +32,6 @@ class _TonieOAuth2Session(OAuth2Session):
         except HTTPError as http_err:
             log.error(f"HTTP error occurred: {http_err}")
             return None
-        # except Exception as err:
-        #     log.error(f'Other error occurred: {err}')
-        #     return None
         else:
             return r.json()
 
@@ -54,9 +51,6 @@ class _TonieOAuth2Session(OAuth2Session):
         except HTTPError as http_err:
             log.error(f"HTTP error occurred: {http_err}")
             return None
-        # except Exception as err:
-        #     log.error(f'Other error occurred: {err}')
-        #     return None
         else:
             return r.json()
 
@@ -159,17 +153,7 @@ class TonieAPI(_TonieAPIBase):
             log.warning("Households could not be updated.")
             return
         else:
-            return self._updater(r, self._households, _Household)
-        # for hh in r:
-        #     if hh['id'] not in self._households.keys():
-        #         self._households[hh['id']] = _Household(
-        #             self.API_URL, self.session, hh)
-        # if len(self._households) > len(r):
-        #     for hh in self._households.keys():
-        #         if hh not in r.keys():
-        #             del self._households[hh]
-        #             log.info(f'Removed household {hh}')
-        # return {k: v.name for k, v in self._households.items()}
+            return self._updater(r, self._households, Household)
 
     def update(self):
         """Update data structure from toniecloud:
@@ -190,7 +174,7 @@ class TonieAPI(_TonieAPIBase):
         log.info("Updating TonieAPI completed.")
 
 
-class _Household(_TonieAPIBase):
+class Household(_TonieAPIBase):
     """Represents Household of tonies.
 
     :param API_URL: API URL
@@ -203,7 +187,6 @@ class _Household(_TonieAPIBase):
 
     def __init__(self, API_URL, session, hhproperties):
         self.session = session
-        # self.properties = hhproperties
         self.id = hhproperties["id"]
         self.name = hhproperties["name"]
         self.API_URL = f"{API_URL}/households/{self.id}"
@@ -242,15 +225,10 @@ class _Household(_TonieAPIBase):
             log.warning("Creative tonies could not be updated.")
             return
         else:
-            return self._updater(r, self._creativetonies, _CreativeTonie)
-        # for ct in r:
-        #     if ct['id'] not in self._creativetonies.keys():
-        #         self._creativetonies[ct['id']] = _CreativeTonie(
-        #             self.API_URL, self.session, ct)
-        # return {k: v.name for k, v in self._creativetonies.items()}
+            return self._updater(r, self._creativetonies, CreativeTonie)
 
 
-class _CreativeTonie:
+class CreativeTonie:
     """Represents single creative tonie.
 
     :param API_URL: API URL
@@ -263,7 +241,6 @@ class _CreativeTonie:
 
     def __init__(self, API_URL, session, ctproperties):
         self.session = session
-        # self._properties = ctproperties
         self.id = ctproperties["id"]
         self.name = ctproperties["name"]
         self.API_URL = f"{API_URL}/creativetonies/{self.id}"
@@ -313,8 +290,9 @@ class _CreativeTonie:
         :return: contentID of uploaded chapter
         :rtype: str
         """
+        contentid = None
         chapters = self.chapters
-        chapters.append(_Chapter(fileid, title, fileid))
+        chapters.append(Chapter(fileid, title, fileid))
         r = self._patch_chapters(chapters)
         # find new contentid associated with the uploaded file
         for ch in reversed(r["chapters"]):
@@ -383,9 +361,6 @@ class _CreativeTonie:
         except HTTPError as http_err:
             log.error(f"HTTP error occurred: {http_err}")
             return
-        # except Exception as err:
-        #     log.error(f'Other error occurred: {err}')
-        #     return
         contentid = r.headers["etag"]
         log.info(f'File {file} uploaded to server with ID {fields["key"]}.')
         # add chapter to creative tonie
@@ -393,7 +368,7 @@ class _CreativeTonie:
         return contentid
 
 
-class _Chapter(dict):
+class Chapter(dict):
     """Chapter of content on creative tonie.
 
     :param contentid: ID of file in toniecloud
