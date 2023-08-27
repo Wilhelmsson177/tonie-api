@@ -116,6 +116,7 @@ exclude = [
     "dist",
     "node_modules",
     "venv",
+    "docs",
 ]
 
 # Same as Black.
