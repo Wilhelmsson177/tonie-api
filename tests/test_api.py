@@ -110,3 +110,17 @@ def test_sort_chapter(mocked_responses: responses.RequestsMock):
         )
         is True
     )
+
+
+def test_clear_all_chapter(mocked_responses: responses.RequestsMock):
+    tonie_api = TonieAPI("some user", "some_pass")
+    household = tonie_api.get_households()[0]
+    creative_tonie = tonie_api.get_all_creative_tonies_by_household(household)[0]
+    tonie_api.clear_all_chapter_of_tonie(creative_tonie)
+    assert (
+        mocked_responses.assert_call_count(
+            "https://api.tonie.cloud/v2/households/abcd-123456/creativetonies/CREATIVETONIE_ID",
+            1,
+        )
+        is True
+    )
