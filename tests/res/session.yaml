@@ -1,0 +1,10 @@
+responses:
+  - response:
+      auto_calculate_content_length: false
+      body:
+        '{"access_token":"eyJhbGci<sometoken>VMRfxtg","not-before-policy":1607580029,"session_state":"3f47f045-7ea4-4495-a7ff-3bcacfb7801b","scope":"openid
+        bx-profiles shop-de bx-user-attributes cloudservices shop-us email profile shop-uk"}'
+      content_type: text/plain
+      method: POST
+      status: 200
+      url: https://login.tonies.com/auth/realms/tonies/protocol/openid-connect/token
