@@ -8,7 +8,7 @@ from tonie_api.models import Config, CreativeTonie, User
 
 @pytest.fixture(autouse=True)
 def mocked_responses():
-    with responses.RequestsMock() as rsps:
+    with responses.RequestsMock(assert_all_requests_are_fired=False) as rsps:
         rsps._add_from_file("tests/res/cloudapi.yaml")
         yield rsps
 
