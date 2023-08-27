@@ -1,0 +1,161 @@
+responses:
+  - response:
+      auto_calculate_content_length: false
+      body:
+        '{"access_token":"eyJhbGci<sometoken>VMRfxtg","not-before-policy":1607580029,"session_state":"a1696984-9133-a7cbaf050818","scope":"openid
+        bx-profiles shop-de bx-user-attributes cloudservices shop-us email profile shop-uk"}'
+      content_type: text/plain
+      method: POST
+      status: 200
+      url: https://login.tonies.com/auth/realms/tonies/protocol/openid-connect/token
+  - response:
+      auto_calculate_content_length: false
+      body: '{"email":"someone@example.com","uuid":"fea83d4b-2041-115e5a3","firstName":"John","lastName":"Doe","sex":null,"tracking":false,"authCode":"JsaasasasasasaA","profileImage":"elefant.svg","isVerified":true,"locale":"de","country":"de","isEduUser":false,"isBetaTester":false,"acceptedTermsOfUse":true,"notificationCount":1,"requiresVerificationToUpload":false,"unicodeLocale":"de","ownsTunes":false,"region":"dach","canBuyTunes":true,"creativeTonieShopUrl":"https://tonies.com/de-de/shop/kreativ-tonies/","anyPublicContentTokens":true}'
+      content_type: text/plain
+      method: GET
+      status: 200
+      url: https://api.tonie.cloud/v2/me
+  - response:
+      auto_calculate_content_length: false
+      body:
+        '{"locales": ["de", "en", "en_US", "fr"], "unicodeLocales": ["de", "en",
+        "en-US", "fr"], "maxChapters": 99, "maxSeconds": 5400, "maxBytes": 1073741824,
+        "accepts": ["aac", "aif", "aiff", "flac", "mp3", "m4a", "m4b", "wav", "oga",
+        "ogg", "opus", "wma"], "stageWarning": false, "paypalClientId": "ATXc<some_key>_uQ",
+        "ssoEnabled": true}'
+      content_type: text/plain
+      method: GET
+      status: 200
+      url: https://api.tonie.cloud/v2/config
+  - response:
+      auto_calculate_content_length: false
+      body: '[{"id":"abcd-123456","name":"John Does Household","image":"haus.svg","foreignCreativeTonieContent":true,"access":"owner","canLeave":true,"ownerName":"John"}]'
+      content_type: text/plain
+      method: GET
+      status: 200
+      url: https://api.tonie.cloud/v2/households
+  - response:
+      auto_calculate_content_length: false
+      body: "[{\"id\":\"CREATIVETONIE_ID\",\"householdId\":\"abcd-123456\"\
+        ,\"name\":\"CreatvieTonieName\",\"live\":false,\"private\":false,\"imageUrl\":\"https://cdn.tonies.de/thumbnails/50001005.png\"\
+        ,\"transcodingErrors\":[],\"chapters\":[],\"transcoding\":false,\"secondsPresent\"\
+        :0,\"secondsRemaining\":5400,\"lastUpdate\":null,\"chaptersPresent\":0,\"chaptersRemaining\"\
+        :99},{\"id\":\"98A84E0\",\"householdId\":\"abcd-123456\"\
+        ,\"name\":\"Kreativ-Tonie\",\"live\":true,\"private\":false,\"imageUrl\":\"\
+        https://cdn.tonies.de/thumbnails/50001005.png\",\"transcodingErrors\":[],\"\
+        chapters\":[{\"id\":\"a2382077-47ba-a03b-d3cff1a371b1\",\"title\":\"Dr.Brum-verr\xFC\
+        ckt\",\"file\":\"4c3b5023599ef85f7b1a87ee7_a2382077-b8b2-a03b-d3cff1a371b1\"\
+        ,\"seconds\":392.515563,\"transcoding\":false},{\"id\":\"b7b7ea70-f92e-aa2d-5dec0e805898\"\
+        ,\"title\":\"Dr.Brumm-HulaHula-Normal\",\"file\":\"37abec4fad534c3c8e76a875c8649196_b7b7ea70-43ce-aa2d-5dec0e805898\"\
+        ,\"seconds\":317.267167,\"transcoding\":false},{\"id\":\"e6f412e6-3661-9689-376a9c72d2b3\"\
+        ,\"title\":\"Schatzsuche\",\"file\":\"39a799953a3946f68e8b87c7ed001a59_e6f412e6-3661-9689-376a9c72d2b3\"\
+        ,\"seconds\":107.313167,\"transcoding\":false},{\"id\":\"61dfb0b1-4b99-466b-f3e74a36a4c5\"\
+        ,\"title\":\"954557-m-94ad5d06f83d309396e37c42e\",\"file\":\"36f735ca6986464386b1f30e4cab1c47_61dfb0b1-4b99-466b-f3e74a36a4c5\"\
+        ,\"seconds\":112.440521,\"transcoding\":false},{\"id\":\"a6c7bfac-b223-f7b2ef93e1cf\"\
+        ,\"title\":\"Geschichte zwei\",\"file\":\"2a123e7bcd9a4a2eaff5e44e47d2dee7_a6c7bfac-b223-f7b2ef93e1cf\"\
+        ,\"seconds\":149.8945,\"transcoding\":false},{\"id\":\"c90747cd-49ae-a27d-56971ff55421\"\
+        ,\"title\":\"954563-m-82e7a0c49c7b843bde\",\"file\":\"36f735ca69e4cab1c47_c90747cd-49ae-a27d-56971ff55421\"\
+        ,\"seconds\":176.122521,\"transcoding\":false},{\"id\":\"7a1b6161-c6af-99b8-3ceebb5b8daa\"\
+        ,\"title\":\"John Fu\xDFballturnier\",\"file\":\"2a123e7ba2eaff5e44e47d2dee7_7a1b6161-c6af-99b8-3ceebb5b8daa\"\
+        ,\"seconds\":148.3585,\"transcoding\":false},{\"id\":\"a168aed7-995d-a6c0-6a13314bec9f\"\
+        ,\"title\":\"954570-m-48480c2debb6e204b67\",\"file\":\"36f735ca6986464386b1f30e4cab1c47_a168aed7-995d-a6c0-6a13314bec9f\"\
+        ,\"seconds\":122.3665,\"transcoding\":false},{\"id\":\"a11432b4-fb0d-8477-f836f2f7ffac\"\
+        ,\"title\":\"Erna Trampolin\",\"file\":\"2a123e7bcd9a4a2eaff5e44e47d2dee7_a11432b4-fb0d-8477-f836f2f7ffac\"\
+        ,\"seconds\":130.6305,\"transcoding\":false},{\"id\":\"f47d5238-30e1-4292-77f0de1964d4\"\
+        ,\"title\":\"958213-m-c7c154c50801f1827967f6\",\"file\":\"36f735ca6986464386b1f30e4cab1c47_f47d5238-30e1-4292-77f0de1964d4\"\
+        ,\"seconds\":127.521521,\"transcoding\":false},{\"id\":\"551c2b3d-74ea-9cbe-52917a6cf678\"\
+        ,\"title\":\"Lustige Geschwister\",\"file\":\"2a123e7bcd9a4a2eaff5e44e47d2dee7_551c2b3d-74ea-9cbe-52917a6cf678\"\
+        ,\"seconds\":113.627833,\"transcoding\":false},{\"id\":\"96f5a893-a547-87c1-8e0fc1dd70a1\"\
+        ,\"title\":\"960053-m-419ce66cb909710dbd153\",\"file\":\"36f735ca6986464386b1f30e4cab1c47_96f5a893-a547-87c1-8e0fc1dd70a1\"\
+        ,\"seconds\":159.062521,\"transcoding\":false}],\"transcoding\":false,\"secondsPresent\"\
+        :2057,\"secondsRemaining\":3342,\"lastUpdate\":\"2023-04-02T18:32:58+00:00\"\
+        ,\"chaptersPresent\":12,\"chaptersRemaining\":87},{\"id\":\"856104E0\"\
+        ,\"householdId\":\"abcd-123456\",\"name\":\"John-Tonie\"\
+        ,\"live\":false,\"private\":false,\"imageUrl\":\"https://cdn.tonies.de/thumbnails/50000082.png\"\
+        ,\"transcodingErrors\":[],\"chapters\":[{\"id\":\"beebfb94-ebf5-a7c5-f7b62063f03d\"\
+        ,\"title\":\"Update: Wissenschaft - Was it's eigentlich Philosophie? (Thu, 24\
+        \ Aug 2023 14:00:00 +0200)\",\"file\":\"797a9264705d492ebcc613b2cd9be776_beebfb94-ebf5-a7c5-f7b62063f03d\"\
+        ,\"seconds\":1500.558354,\"transcoding\":false},{\"id\":\"d4e4486f-d969-48c4-2a385fd3085d\"\
+        ,\"title\":\"Vorurteile - Muss ich mich vor Hexen f\xFCrchten? (Wed, 23 Aug\
+        \ 2023 03:00:15 +0200)\",\"file\":\"797a9264705d492ebcc613b2cd9be776_d4e4486f-d969-48c4-2a385fd3085d\"\
+        ,\"seconds\":1519.209771,\"transcoding\":false},{\"id\":\"c463801b-9ee3-a4bf-e4a5c98b8a17\"\
+        ,\"title\":\"Update: Abk\xFChlung - Warum kann Eis Kopfweh machen? (Thu, 17\
+        \ Aug 2023 14:00:00 +0200)\",\"file\":\"797a9264705d492ebcc613b2cd9be776_c463801b-9ee3-a4bf-e4a5c98b8a17\"\
+        ,\"seconds\":1346.174667,\"transcoding\":false}],\"transcoding\":false,\"secondsPresent\"\
+        :4365,\"secondsRemaining\":1034,\"lastUpdate\":\"2023-08-27T11:07:46+00:00\"\
+        ,\"chaptersPresent\":3,\"chaptersRemaining\":96},{\"id\":\"9B5AC304E0\"\
+        ,\"householdId\":\"abcd-123456\",\"name\":\"Erna-Tonie\"\
+        ,\"live\":false,\"private\":false,\"imageUrl\":\"https://cdn.tonies.de/thumbnails/50000084.png\"\
+        ,\"transcodingErrors\":[],\"chapters\":[{\"id\":\"16ad3f38-a312-d45213cfceb7\"\
+        ,\"title\":\"Konrad das Kaninchen - John\",\"file\":\"805f5dbef5334dda81db052faa4d7025_16ad3f38-a312-d45213cfceb7\"\
+        ,\"seconds\":1474.4385,\"transcoding\":false},{\"id\":\"8d7b079b-8fac-4f43-b7bc-73ea62ac8336\"\
+        ,\"title\":\"Tonies Beim Spielen Z\xE4hlst Nur Du\",\"file\":\"ContentToken:lied-beimspielen:0\"\
+        ,\"seconds\":194.840021,\"transcoding\":false},{\"id\":\"42893216-88e2-4129-8cd0ea936563\"\
+        ,\"title\":\"H\xF6r gut zu\",\"file\":\"ContentToken:toniesong:0\",\"seconds\"\
+        :177.645688,\"transcoding\":false},{\"id\":\"22560033-ba72-8f37-c69982ffca4f\"\
+        ,\"title\":\"Hey, kleiner Osterhase\",\"file\":\"ContentToken:hey-kleiner-osterhase:0\"\
+        ,\"seconds\":155.241521,\"transcoding\":false},{\"id\":\"0d7b81b0-63cb-ba1d-d5bebb9376ff\"\
+        ,\"title\":\"Buddel Bunny und der Gemu\u0308sewettbewerb\",\"file\":\"ContentToken:elmex-buddel-bunny-und-der-gemuesewettbewerb:0\"\
+        ,\"seconds\":142.8465,\"transcoding\":false},{\"id\":\"2e0bd164-3d8a-add4-c7a9e6c602f1\"\
+        ,\"title\":\"Die Supermama\",\"file\":\"ContentToken:die-supermama:0\",\"seconds\"\
+        :436.5265,\"transcoding\":false},{\"id\":\"98863d4e-1273-94c6-4940bf2639d7\"\
+        ,\"title\":\"Vorlesegeschichten - Willi und Walli\",\"file\":\"ContentToken:2022-vorlesetag-willi-und-walli:0\"\
+        ,\"seconds\":449.5265,\"transcoding\":false}],\"transcoding\":false,\"secondsPresent\"\
+        :3031,\"secondsRemaining\":2368,\"lastUpdate\":\"2023-03-26T18:07:57+00:00\"\
+        ,\"chaptersPresent\":7,\"chaptersRemaining\":92},{\"id\":\"AAE004E0\"\
+        ,\"householdId\":\"abcd-123456\",\"name\":\"SuperErna\"\
+        ,\"live\":false,\"private\":false,\"imageUrl\":\"https://cdn.tonies.de/thumbnails/98-0579-i.png\"\
+        ,\"transcodingErrors\":[],\"chapters\":[{\"id\":\"3bd72bce-9aee-be77-c67683eb9108\"\
+        ,\"title\":\"Gute Nacht K\xF6rper\",\"file\":\"ContentToken:aumio-gute-nacht-koerper:0\"\
+        ,\"seconds\":542.56025,\"transcoding\":false},{\"id\":\"1d04ecc1-e2b4-b5ed-4d87bef7d85d\"\
+        ,\"title\":\"gutenachtmitdermaus_2021-11-29_glueckimspiel_diemaus\",\"file\"\
+        :\"5d85ca04498d498720_1d04ecc1-e2b4-b5ed-4d87bef7d85d\",\"\
+        seconds\":1507.2785,\"transcoding\":false},{\"id\":\"18fcfe95-b45b-9563-e7fbb6927323\"\
+        ,\"title\":\"gutenachtmitdermaus_2021-11-26_verschnarcht_diemaus\",\"file\"\
+        :\"5d85ca0446d848d498720_18fcfe95-b45b-9563-e7fbb6927323\",\"\
+        seconds\":1236.7985,\"transcoding\":false},{\"id\":\"48fca57f-de02-8311-74fe6bde2fcc\"\
+        ,\"title\":\"Wald Mit V\xF6geln 30 Minuten\",\"file\":\"ContentToken:wald-mit-voegeln-30:0\"\
+        ,\"seconds\":1739.970583,\"transcoding\":false}],\"transcoding\":false,\"secondsPresent\"\
+        :5026,\"secondsRemaining\":373,\"lastUpdate\":\"2022-01-05T18:01:55+00:00\"\
+        ,\"chaptersPresent\":4,\"chaptersRemaining\":95}]"
+      content_type: text/plain; charset=utf-8
+      method: GET
+      status: 200
+      url: https://api.tonie.cloud/v2/households/abcd-123456/creativetonies
+  - response:
+      auto_calculate_content_length: false
+      body:
+        '{"request": {"url": "https://bxn-toniecloud-prod-upload.s3.amazonaws.com/",
+        "fields": {"key": "500e8d77-4bae-485a-9730-54f0755c2e3f", "x-amz-algorithm":
+        "AWS4-HMAC-SHA256", "x-amz-credential": "ASIAT4WVN/20230827/eu-central-1/s3/aws4_request",
+        "x-amz-date": "20230827T153336Z", "x-amz-security-token": "sec_token",
+        "policy": "policy_tokeb",
+        "x-amz-signature": "77260bb5c0a3724012c5724c2728785fbf898f84d7a5d4"}},
+        "fileId": "500e8d77-4bae-485a-9730-54f0755c2e3f"}'
+      content_type: text/plain
+      method: POST
+      status: 200
+      url: https://api.tonie.cloud/v2/file
+  - response:
+      auto_calculate_content_length: false
+      body: ""
+      content_type: text/plain
+      method: POST
+      status: 204
+      url: https://bxn-toniecloud-prod-upload.s3.amazonaws.com/
+  - response:
+      auto_calculate_content_length: false
+      body:
+        "{\"detail\":\"Nicht unterst\xFCtzter Medientyp \\\"application/x-www-form-urlencoded\\\
+        \" in der Anfrage.\"}"
+      content_type: text/plain; charset=utf-8
+      method: POST
+      status: 415
+      url: https://api.tonie.cloud/v2/households/abcd-123456/creativetonies/CREATIVETONIE_ID/chapters
+  - response:
+      auto_calculate_content_length: false
+      body: '{"id":"CREATIVETONIE_ID","householdId":"abcd-123456","name":"CreatvieTonieName","live":false,"private":false,"imageUrl":"https://cdn.tonies.de/thumbnails/50001005.png","transcodingErrors":[],"chapters":[],"transcoding":false,"secondsPresent":0,"secondsRemaining":5400,"lastUpdate":null,"chaptersPresent":0,"chaptersRemaining":99}'
+      content_type: text/plain
+      method: PATCH
+      status: 200
+      url: https://api.tonie.cloud/v2/households/abcd-123456/creativetonies/CREATIVETONIE_ID

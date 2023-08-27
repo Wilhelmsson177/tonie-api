@@ -1,394 +1,172 @@
+"""The base module of the tonie-api."""
+
 import logging
+from enum import Enum
+from pathlib import Path
+from string import Template
+
 import requests
 from requests.exceptions import HTTPError
-from oauthlib.oauth2 import LegacyApplicationClient
-from requests_oauthlib import OAuth2Session
+
+from tonie_api.models import Chapter, Config, CreativeTonie, FileUploadRequest, Household, User
+from tonie_api.session import TonieCloudSession
 
 log = logging.getLogger(__name__)
 log.addHandler(logging.NullHandler())
 
 
-class _TonieOAuth2Session(OAuth2Session):
-    """`OAuth2Session` class with some additional
-    methods useful for tonie_api.
-    """
+class HttpMethod(Enum):
+    """An enum of the Http Method to use."""
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-    def get_json(self, url):
-        """HTTP `GET` request which, if successful,
-        is parsed to JSON format.
-        Catches HTTP errors and writes them to logger.
-
-        :param url: URL
-        :type url: str
-        :return: response in JSON format
-        :rtype: dict
-        """
-        try:
-            r = self.get(url)
-            r.raise_for_status()
-        except HTTPError as http_err:
-            log.error(f"HTTP error occurred: {http_err}")
-            return None
-        else:
-            return r.json()
-
-    def patch_json(self, url, **kwargs):
-        """HTTP `PATCH` request which, if successful,
-        is parsed to JSON format.
-        Catches HTTP errors and writes them to logger.
-
-        :param url: URL
-        :type url: str
-        :return: response in JSON format
-        :rtype: dict
-        """
-        try:
-            r = self.patch(url, **kwargs)
-            r.raise_for_status()
-        except HTTPError as http_err:
-            log.error(f"HTTP error occurred: {http_err}")
-            return None
-        else:
-            return r.json()
+    GET = "GET"
+    POST = "POST"
+    PATCH = "PATCH"
 
 
-class _TonieAPIBase:
-    """Container for methods shared between different classes
-    of the TonieboxAPI.
-    """
-
-    # to be patched by inherited classes
-    API_URL = None
-    session = None
-
-    def _updater(self, r, storedict, itemclass):
-        """Updates a dictionary of instances from a
-        dict of IDs. Create an instance for every missing
-        ID. Delete instances which are no longer present.
-
-        Example: A dict of creative tonies with `ID:properties`
-        retrieved from a request to the toniecloud.
-        For every tonie a :class:`_CreativeTonie` instance is
-        created and added to `storedict` under it's ID.
-
-        :param r: JSON response from HTTP request
-        :type r: dict
-        :param storedict: variable to store the instances
-        :type storedict: dict
-        :param itemclass: class to be instantiated
-        :type itemclass: class
-        :return: dict of `ID:name`
-        :rtype: dict
-        """
-        # add only new items to dict
-        for hh in r:
-            if hh["id"] not in storedict.keys():
-                storedict[hh["id"]] = itemclass(self.API_URL, self.session, hh)
-        # check if items have been removed on the server
-        if len(storedict) > len(r):
-            for hh in storedict.keys():
-                if hh not in r.keys():
-                    del storedict[hh]
-                    log.info(f"Removed {itemclass.__name__} {hh}")
-        # return id -> name dict
-        return {k: v.name for k, v in storedict.items()}
-
-
-class TonieAPI(_TonieAPIBase):
-    """Interface to toniecloud. Authenticates and acquires
-    token for communication.
-
-    :param username: username for login to login.tonies.com
-    :type username: str
-    :param password: password for login to login.tonies.com
-    :type password: str
-    """
+class TonieAPI:
+    """The TonieAPI class."""
 
     API_URL = "https://api.tonie.cloud/v2"
-    TOKEN_URL = (
-        "https://login.tonies.com/auth/realms/tonies/protocol/openid-connect/token"
-    )
 
-    def __init__(self, username, password):
-        client = LegacyApplicationClient(client_id="meine-tonies")
-        self.session = _TonieOAuth2Session(client=client)
-        self.session.fetch_token(
-            token_url=self.TOKEN_URL, username=username, password=password
-        )
-        self._households = {}
+    def __init__(self, username: str, password: str) -> None:
+        """Initializes the API and creates a session token for tonie cloud session."""
+        self.session = TonieCloudSession()
+        self.session.acquire_token(username=username, password=password)
 
-    @property
-    def me(self):
-        """Account information"""
-        return self.session.get_json(f"{self.API_URL}/me")
+    def __request(self, url: str, request_type: HttpMethod, data: dict | None = None) -> dict:
+        headers = {"Authorization": f"Bearer {self.session.token}"}
+        if not data:
+            data = {}
+        resp = self.session.request(request_type.name, f"{self.API_URL}/{url}", headers=headers, data=data)
+        if not resp.ok:
+            log.error("HTTP request failed: %s", resp)
+            return {}
+        return resp.json()
 
-    @property
-    def config(self):
-        """Configuration"""
-        return self.session.get_json(f"{self.API_URL}/config")
+    def _get(self, url: str) -> dict:
+        return self.__request(url, HttpMethod.GET)
 
-    @property
-    def households(self):
-        """Household instances acquired by
-        :meth:`TonieAPI.households_update()`. Household IDs as keys.
+    def _post(self, url: str, data: dict | None = None) -> dict:
+        if not data:
+            data = {}
+        return self.__request(url, HttpMethod.POST, data=data)
 
-        :return: Household instances
-        :rtype: dict
+    def _patch(self, url: str, data: dict | None = None) -> dict:
+        if not data:
+            data = {}
+        return self.__request(url, HttpMethod.PATCH, data=data)
+
+    def get_me(self) -> User:
+        """Gets the information about the logged in user.
+
+        Returns:
+            User: The user object.
         """
-        return self._households
+        url = "me"
+        return User(**self._get(url))
 
-    def households_update(self):
-        """Get households from toniecloud and create
-        :class:`_Household` instance for each new household.
-        Store instances in :meth:`TonieAPI.households` property.
+    def get_config(self) -> Config:
+        """Gets the backend configuration.
 
-        :return: Household ID: household name
-        :rtype: dict
+        Returns:
+            User: The config object.
         """
-        r = self.session.get_json(f"{self.API_URL}/households")
-        if r is None:
-            log.warning("Households could not be updated.")
-            return
-        else:
-            return self._updater(r, self._households, Household)
+        url = "config"
+        return Config(**self._get(url))
 
-    def update(self):
-        """Update data structure from toniecloud:
+    def get_households(self) -> list[Household]:
+        """Get all households of the logged in user.
 
-        - all households & their properties
-        - all creative tonies & their properties
+        Returns:
+            List[Household]: All Households of user.
         """
-        log.info("Updating TonieAPI...")
-        self.households_update()
-        for hh in self.households.values():
-            # update name and other properties
-            hh.properties
-            # update list creative tonies
-            hh.creativetonies_update()
-            for ct in hh.creativetonies.values():
-                # update name and other properties
-                ct.properties
-        log.info("Updating TonieAPI completed.")
+        url = "households"
+        return [Household(**x) for x in self._get(url)]
 
+    def get_all_creative_tonies_by_household(self, household: Household) -> list[CreativeTonie]:
+        """Get all creative tonies by a given household.
 
-class Household(_TonieAPIBase):
-    """Represents Household of tonies.
+        Args:
+            household (Household): A household
 
-    :param API_URL: API URL
-    :type API_URL: str
-    :param session: communication session
-    :type session: :class:`_TonieOAuth2Session`
-    :param hhproperties: initial household properties
-    :type hhproperties: dict
-    """
-
-    def __init__(self, API_URL, session, hhproperties):
-        self.session = session
-        self.id = hhproperties["id"]
-        self.name = hhproperties["name"]
-        self.API_URL = f"{API_URL}/households/{self.id}"
-        log.info(f"Set up household {self.id} with name {self.name}.")
-        self._creativetonies = {}
-
-    @property
-    def properties(self):
-        """Properties of the household read from
-        toniecloud.
+        Returns:
+            Lis[CreativeTonie]: A list of all creative tonies, which belong to the given household.
         """
-        prop = self.session.get_json(self.API_URL)
-        self.name = prop["name"]
-        return prop
+        url = Template("households/$household_id/creativetonies")
+        return [CreativeTonie(**ct) for ct in self._get(url=url.substitute(household_id=household.id))]
 
-    @property
-    def creativetonies(self):
-        """Creative tonie instances acquired by
-        :meth:`_Household.creativetonies_update()`. Tonie IDs as keys.
+    def get_all_creative_tonies(self) -> list[CreativeTonie]:
+        """Get all creative tonies of the logged in user.
 
-        :return: Creative tonie instances
-        :rtype: dict
+        Returns:
+            List[CreativeTonie]: A list of all creative tonies, which belong to the logged in user.
         """
-        return self._creativetonies
+        url = Template("households/$household_id/creativetonies")
+        return [
+            CreativeTonie(**ct)
+            for household in self.get_households()
+            for ct in self._get(url=url.substitute(household_id=household.id))
+        ]
 
-    def creativetonies_update(self):
-        """Get creative tonies from toniecloud and create
-        :class:`_CreativeTonie` instance for each new tonie
-        Store instances in :meth:`_Household.creativetonies` property.
+    def upload_file_to_tonie(self, creative_tonie: CreativeTonie, file: Path | str, title: str) -> None:
+        """Upload file to toniecloud and append as new chapter to tonie.
 
-        :return: tonie ID: tonie name
-        :rtype: dict
-        """
-        r = self.session.get_json(f"{self.API_URL}/creativetonies")
-        if r is None:
-            log.warning("Creative tonies could not be updated.")
-            return
-        else:
-            return self._updater(r, self._creativetonies, CreativeTonie)
+        Args:
+            creative_tonie (CreativeTonie): The tonie on which the file gets uploaded to
+            file (Path | str): The path of the file
+            title (str): the title for the chapter
 
-
-class CreativeTonie:
-    """Represents single creative tonie.
-
-    :param API_URL: API URL
-    :type API_URL: str
-    :param session: communication session
-    :type session: :class:`_TonieOAuth2Session`
-    :param hhproperties: initial tonie properties
-    :type hhproperties: dict
-    """
-
-    def __init__(self, API_URL, session, ctproperties):
-        self.session = session
-        self.id = ctproperties["id"]
-        self.name = ctproperties["name"]
-        self.API_URL = f"{API_URL}/creativetonies/{self.id}"
-        log.info(f"Set up creative tonie {self.id} with name {self.name}.")
-
-    @property
-    def properties(self):
-        """Properties of the creative tonie read from
-        toniecloud.
-        """
-        prop = self.session.get_json(self.API_URL)
-        self.name = prop["name"]
-        return prop
-
-    @property
-    def chapters(self):
-        """Chapters of content connected to this tonie."""
-        return self.properties["chapters"]
-
-    def _patch_chapters(self, chapters):
-        """HTTP ``PATCH`` request to update the chapter information.
-
-        :param chapters: new chapters JSON data
-        :type chapters: dict
-        """
-        r = self.session.patch_json(f"{self.API_URL}", json={"chapters": chapters})
-        log.info(f"Chapters of {self.id} updated.")
-        return r
-
-    def remove_all_chapters(self):
-        """Removes all chapters stored on this tonie.
-
-        :return: response in JSON format
-        :rtype: dict
-        """
-        r = self.session.patch_json(f"{self.API_URL}", json={"chapters": []})
-        log.info(f"All chapters of {self.id} removed.")
-        return r
-
-    def add_chapter(self, fileid, title):
-        """Add single chapter to the end of the tonie.
-
-        :param fileid: fileID from upload
-        :type fileid: str
-        :param title: chapter title
-        :type title: str
-        :return: contentID of uploaded chapter
-        :rtype: str
-        """
-        contentid = None
-        chapters = self.chapters
-        chapters.append(Chapter(fileid, title, fileid))
-        r = self._patch_chapters(chapters)
-        # find new contentid associated with the uploaded file
-        for ch in reversed(r["chapters"]):
-            # for new file:
-            #   file field contains fileID (this changes afterwards!)
-            #   id fieldholds newly assigned contentID
-            if ch["file"] == fileid:
-                contentid = ch["id"]
-                break
-        log.info(
-            f"Appended uploaded file {fileid} with title {title}"
-            f" as chapter with id {contentid} to {self.id},"
-            f" now containing {len(chapters)} chapters."
-        )
-        return contentid
-
-    def sort_chapters(self, sortkey, sortlist=None):
-        """Sort chapters of the tonie according to specified
-        key (`'id'` or `'title'`). Optionally, sort according
-        to given list.
-
-        :param sortkey: key to sort list by (`'id'` or `'title'`)
-        :type sortkey: str
-        :param sortlist: list of keys in desired order, defaults to None
-        :type sortlist: list, optional
-        :return: updated chapters data
-        :rtype: dict
-        """
-        # sortkey may be: id, title
-        # sortlist entries must be unique!
-        chapters = self.chapters
-        if sortlist is None:
-            chapters = sorted(chapters, key=lambda ch: ch[sortkey])
-        else:
-            # order according to sortlist
-            if len(sortlist) < len(chapters):
-                log.warning("Sorting of chapters will remove 1 or more chapters!")
-            chapters = {ch[sortkey]: ch for ch in chapters}
-            chapters = [chapters[key] for key in sortlist]
-        self._patch_chapters(chapters)
-        return chapters
-
-    def upload(self, file, title):
-        """Upload file to toniecloud and append as new
-        chapter to tonie.
-
-        :param file: filename
-        :type file: str
-        :param title: chapter title
-        :type title: str
-        :return: ID of the file/chapter in the toniecloud
-        :rtype: str
+        Returns:
+            boolean: True if file was successful uploaded.
         """
         # get info and credentials for upload from toniecloud
-        r = self.session.post("https://api.tonie.cloud/v2/file").json()
-        fileid = r["fileId"]  # same as fields['key']
-        url = r["request"]["url"]
-        fields = r["request"]["fields"]
-        log.debug(f'fileid: {fileid} - key:{fields["key"]}')
+        upload_request = FileUploadRequest(**self._post("file"))
+        log.debug("fileId: %s - fields %s", upload_request.fileId, upload_request.request.fields)
         # upload to Amazon S3
         try:
-            r = requests.post(
-                url, files={**fields, "file": (fields["key"], open(file, "rb"))}
-            )
+            with Path(file).open("rb") as _fs:
+                r = requests.post(
+                    upload_request.request.url,
+                    files={
+                        **upload_request.request.fields,
+                        "file": (upload_request.request.fields["key"], _fs),
+                    },
+                    timeout=180,
+                )
             r.raise_for_status()
-        except HTTPError as http_err:
-            log.error(f"HTTP error occurred: {http_err}")
-            return
-        contentid = r.headers["etag"]
-        log.info(f'File {file} uploaded to server with ID {fields["key"]}.')
+        except HTTPError:
+            log.exception("HTTP error occurred")
+            raise
+
         # add chapter to creative tonie
-        contentid = self.add_chapter(fileid, title)
-        return contentid
+        self.add_chapter_to_tonie(creative_tonie, upload_request.fileId, title)
 
+    def add_chapter_to_tonie(self, creative_tonie: CreativeTonie, file_id: str, title: str) -> None:
+        """Add a chapter to a given tonie with file_id and title.
 
-class Chapter(dict):
-    """Chapter of content on creative tonie.
+        Args:
+            creative_tonie (CreativeTonie): The Tonie to add the chapter to
+            file_id (str): The file id of the file to add as chapter
+            title (str): The title of the chapter
+        """
+        url = f"households/{creative_tonie.householdId}/creativetonies/{creative_tonie.id}/chapters"
+        self._post(url=url, data={"title": title, "file": file_id})
 
-    :param contentid: ID of file in toniecloud
-    :type contentid: str
-    :param title: chapter title
-    :type title: str
-    :param filename: filename on server
-    :type filename: str
-    :param seconds: duration in seconds, defaults to None
-    :type seconds: float, optional
-    :param transcoding: pending transcoding, defaults to None
-    :type transcoding: bool, optional
-    """
+    def sort_chapter_of_tonie(self, creative_tonie: CreativeTonie, sort_list: list[Chapter]) -> None:
+        """Sort all chapters of the tonie to the given list.
 
-    def __init__(self, contentid, title, filename, seconds=None, transcoding=None):
-        super().__init__()
-        self["id"] = contentid
-        self["title"] = title
-        self["file"] = filename
-        if seconds is not None:
-            self["seconds"] = seconds
-        if transcoding is not None:
-            self["transcoding"] = transcoding
+        Args:
+            creative_tonie (CreativeTonie): The Tonie to sort the chapters on.
+            sort_list (list[Chapter]): A list of all chapters in the correct order.
+        """
+        url = f"households/{creative_tonie.householdId}/creativetonies/{creative_tonie.id}"
+        self._patch(url=url, data={"chapters": [dict(chapter) for chapter in sort_list]})
+
+    def clear_all_chapter_of_tonie(self, creative_tonie: CreativeTonie) -> None:
+        """Clear all chapter of given tonie.
+
+        Args:
+            creative_tonie (CreativeTonie): _The tonie to clear all chapters on.
+        """
+        url = f"households/{creative_tonie.householdId}/creativetonies/{creative_tonie.id}"
+        self._patch(url=url, data={"chapters": []})
