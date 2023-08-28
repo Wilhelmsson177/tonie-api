@@ -1,6 +1,35 @@
 # Changelog
 
+## v0.1.1 (2023-08-28)
+
+### Unknown
+
+- Merge pull request #14 from wilhelmsson177/fix-data-type-error
+
+fix: usage of json over data of post request ([`0eb4b59`](https://github.com/Wilhelmsson177/tonie-api/commit/0eb4b599ed4ed3bd148587e4e9c4983576be3824))
+- Merge pull request #8 from wilhelmsson177/dependabot/pip/sphinx-7.2.3 ([`9a9495c`](https://github.com/Wilhelmsson177/tonie-api/commit/9a9495c2bb754ed20c45fbd3b48afe22038720e4))
+- Merge pull request #9 from wilhelmsson177/dependabot/pip/pytest-cov-4.1.0 ([`7e327d2`](https://github.com/Wilhelmsson177/tonie-api/commit/7e327d2c6405aeb509f791b8cb554ea2f578c674))
+- Merge pull request #12 from wilhelmsson177/all-contributors/add-wilhelmsson177
+
+docs: add wilhelmsson177 as a contributor for test, projectmanagement, and 2 more ([`1687d02`](https://github.com/Wilhelmsson177/tonie-api/commit/1687d02177d00a8e1125e069d76102af64cbeab8))
+
+### Documentation
+
+- Docs: fix format readme ignore for now on ([`224ac91`](https://github.com/Wilhelmsson177/tonie-api/commit/224ac91f0a5141be4145b2ae06ff268c56d4a9e3))
+
+### Fix
+
+- Fix: update mime handling for file upload ([`6416e71`](https://github.com/Wilhelmsson177/tonie-api/commit/6416e712cefa200ea9433d39d771aa8da7b9c687))
+- Fix: usage of json over data of post request ([`abe460b`](https://github.com/Wilhelmsson177/tonie-api/commit/abe460b0e69f6ab27c2835f446f9f669080e2cc7))
+
 ## v0.1.0 (2023-08-27)
+
+### Documentation
+
+- Docs: update .all-contributorsrc [skip ci] ([`04ae417`](https://github.com/Wilhelmsson177/tonie-api/commit/04ae417380742466193adfc0f5d87573b5425ea7))
+- Docs: update readme.md [skip ci] ([`27c85ce`](https://github.com/Wilhelmsson177/tonie-api/commit/27c85ceef121d38e2be637f34821f0879d65906b))
+- Docs: create .all-contributorsrc [skip ci] ([`95ce29b`](https://github.com/Wilhelmsson177/tonie-api/commit/95ce29b562f6c6ab905405e797fda3d128a916a7))
+- Docs: update readme.md [skip ci] ([`b321890`](https://github.com/Wilhelmsson177/tonie-api/commit/b3218905e0ce3876e101e88c124592299a288d8e))
 
 ### Unknown
 
@@ -29,11 +58,6 @@ removing chapters from creative tonie ([`d4fc2fb`](https://github.com/Wilhelmsso
 - Initial commit ([`643f42e`](https://github.com/Wilhelmsson177/tonie-api/commit/643f42e9ff4c7cc8700c2b9b17b90f86a6ec6b26))
 - Update readme.md ([`49ac180`](https://github.com/Wilhelmsson177/tonie-api/commit/49ac180627fab882289b922f3a40f1c8b34c8546))
 - Initial commit ([`b4dab81`](https://github.com/Wilhelmsson177/tonie-api/commit/b4dab8181d52206979284185a60db1b4c0c0aee2))
-
-### Documentation
-
-- Docs: create .all-contributorsrc [skip ci] ([`95ce29b`](https://github.com/Wilhelmsson177/tonie-api/commit/95ce29b562f6c6ab905405e797fda3d128a916a7))
-- Docs: update readme.md [skip ci] ([`b321890`](https://github.com/Wilhelmsson177/tonie-api/commit/b3218905e0ce3876e101e88c124592299a288d8e))
 
 ### Test
 

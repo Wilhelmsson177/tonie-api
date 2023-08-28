@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "tonie-api"
-version = "0.1.0"
+version = "0.1.1"
 description = "Python library to access the REST API of the toniecloud. NOT associated with Boxine (tonies.de) in any way."
 authors = ["Willi Meierhof <willi@meierhof.dev>"]
 license = "MIT"
