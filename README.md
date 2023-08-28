@@ -13,8 +13,8 @@
   <a href="https://tonie-api.readthedocs.io">
     <img src="https://img.shields.io/readthedocs/tonie-api.svg?logo=read-the-docs&logoColor=fff&style=flat-square" alt="Documentation Status">
   </a>
-  <a href="https://codecov.io/gh/Wilhelmsson177/tonie-api">
-    <img src="https://img.shields.io/codecov/c/github/Wilhelmsson177/tonie-api.svg?logo=codecov&logoColor=fff&style=flat-square" alt="Test coverage percentage">
+  <a href="https://codecov.io/gh/Wilhelmsson177/tonie-api" > 
+  <img src="https://codecov.io/gh/Wilhelmsson177/tonie-api/graph/badge.svg?token=5RQI9FTXXO"/> 
   </a>
 </p>
 <p align="center">
