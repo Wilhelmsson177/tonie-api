@@ -1,6 +1,7 @@
 """The base module of the tonie-api."""
 
 import logging
+import mimetypes
 from enum import Enum
 from pathlib import Path
 from string import Template
@@ -119,17 +120,18 @@ class TonieAPI:
         Returns:
             boolean: True if file was successful uploaded.
         """
-        # get info and credentials for upload from toniecloud
+        file = Path(file)
+        mime_type = mimetypes.guess_type(file)
         upload_request = FileUploadRequest(**self._post("file"))
         log.debug("fileId: %s - fields %s", upload_request.fileId, upload_request.request.fields)
         # upload to Amazon S3
         try:
-            with Path(file).open("rb") as _fs:
+            with file.open("rb") as _fs:
                 r = requests.post(
                     upload_request.request.url,
+                    data=upload_request.request.fields,
                     files={
-                        **upload_request.request.fields,
-                        "file": (upload_request.request.fields["key"], _fs),
+                        "file": (upload_request.request.fields["key"], _fs, mime_type[0] if mime_type else None),
                     },
                     timeout=180,
                 )
