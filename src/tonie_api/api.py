@@ -37,7 +37,7 @@ class TonieAPI:
         headers = {"Authorization": f"Bearer {self.session.token}"}
         if not data:
             data = {}
-        resp = self.session.request(request_type.name, f"{self.API_URL}/{url}", headers=headers, data=data)
+        resp = self.session.request(request_type.name, f"{self.API_URL}/{url}", headers=headers, json=data)
         if not resp.ok:
             log.error("HTTP request failed: %s", resp)
             return {}
