@@ -172,3 +172,13 @@ class TonieAPI:
         """
         url = f"households/{creative_tonie.householdId}/creativetonies/{creative_tonie.id}"
         self._patch(url=url, data={"chapters": []})
+
+    def change_name_of_tonie(self, creative_tonie: CreativeTonie, name: str) -> None:
+        """Change the name of given tonie.
+
+        Args:
+            creative_tonie (CreativeTonie): The Tonie to change the name for.
+            name (str): A String with the new name.
+        """
+        url = f"households/{creative_tonie.householdId}/creativetonies/{creative_tonie.id}"
+        self._patch(url=url, data={"name": name})
