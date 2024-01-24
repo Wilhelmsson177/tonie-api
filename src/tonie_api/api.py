@@ -121,7 +121,7 @@ class TonieAPI:
         """
         url = f"households/{creative_tonie.householdId}/creativetonies/{creative_tonie.id}"
         ct = self._get(url=url)
-        return CreativeTonie(**ct)
+        return CreativeTonie(**ct) if ct else ct
 
     def upload_file_to_tonie(self, creative_tonie: CreativeTonie, file: Path | str, title: str) -> None:
         """Upload file to toniecloud and append as new chapter to tonie.
