@@ -109,6 +109,20 @@ class TonieAPI:
             for ct in self._get(url=url.substitute(household_id=household.id))
         ]
 
+    def get_creative_tonie(self, creative_tonie: CreativeTonie) -> CreativeTonie:
+        """Get all field for defined creative tonie of the logged in user.
+
+        Args:
+            creative_tonie (CreativeTonie): A minimum defined creativ tonie identified by it's
+            id and householdId
+
+        Returns:
+            CreativeTonie: A creative tonie, which belong to the logged in user.
+        """
+        url = f"households/{creative_tonie.householdId}/creativetonies/{creative_tonie.id}"
+        ct = self._get(url=url)
+        return CreativeTonie(**ct)
+
     def upload_file_to_tonie(self, creative_tonie: CreativeTonie, file: Path | str, title: str) -> None:
         """Upload file to toniecloud and append as new chapter to tonie.
 
