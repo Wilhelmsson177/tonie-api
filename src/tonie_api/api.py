@@ -29,13 +29,20 @@ class TonieAPI:
 
     API_URL = "https://api.tonie.cloud/v2"
 
-    def __init__(self, username: str, password: str) -> None:
+    def __init__(self, username: str, password: str, user_agent: str) -> None:
         """Initializes the API and creates a session token for tonie cloud session."""
+        if not user_agent or user_agent == "":
+            self.user_agent = "tonieApi/2.0"
+        else:
+            self.user_agent = user_agent
         self.session = TonieCloudSession()
-        self.session.acquire_token(username=username, password=password)
+        self.session.acquire_token(username=username, password=password, user_agent=self.user_agent)
 
     def __request(self, url: str, request_type: HttpMethod, data: dict | None = None) -> dict:
-        headers = {"Authorization": f"Bearer {self.session.token}"}
+        headers = {
+            "Authorization": f"Bearer {self.session.token}",
+            "User-Agent": self.user_agent,
+        }
         if not data:
             data = {}
         resp = self.session.request(request_type.name, f"{self.API_URL}/{url}", headers=headers, json=data)
@@ -109,16 +116,28 @@ class TonieAPI:
             for ct in self._get(url=url.substitute(household_id=household.id))
         ]
 
-    def upload_file_to_tonie(self, creative_tonie: CreativeTonie, file: Path | str, title: str) -> None:
-        """Upload file to toniecloud and append as new chapter to tonie.
+    def get_creative_tonie(self, creative_tonie: CreativeTonie) -> CreativeTonie:
+        """Get all field for defined creative tonie of the logged in user.
 
         Args:
-            creative_tonie (CreativeTonie): The tonie on which the file gets uploaded to
-            file (Path | str): The path of the file
-            title (str): the title for the chapter
+            creative_tonie (CreativeTonie): A minimum defined creativ tonie identified by it's
+            id and householdId
 
         Returns:
-            boolean: True if file was successful uploaded.
+            CreativeTonie: A creative tonie, which belong to the logged in user.
+        """
+        url = f"households/{creative_tonie.householdId}/creativetonies/{creative_tonie.id}"
+        ct = self._get(url=url)
+        return CreativeTonie(**ct) if ct else ct
+
+    def upload_file_to_amazon_s3(self, file: Path | str) -> str:
+        """Upload file to toniecloud at amazon s3.
+
+        Args:
+            file (Path | str): The path of the file
+
+        Returns:
+            fileId: returns Amazon fileId when successfully uploaded.
         """
         file = Path(file)
         mime_type = mimetypes.guess_type(file)
@@ -140,8 +159,45 @@ class TonieAPI:
             log.exception("HTTP error occurred")
             raise
 
+        # the uploaded fileId
+        return upload_request.fileId
+
+    def add_file_to_tonie(self, creative_tonie: CreativeTonie, file: Path | str, title: str) -> None:
+        """Add file to toniecloud and append as new chapter to tonie.
+
+        Args:
+            creative_tonie (CreativeTonie): The tonie on which the file gets uploaded and added to
+            file (Path | str): The path of the file
+            title (str): the title for the chapter
+
+        Returns:
+            boolean: True if file was successful uploaded and added.
+        """
+
+        # request upload to amazon s3
+        fileId = self.upload_file_to_amazon_s3(file)
         # add chapter to creative tonie
-        self.add_chapter_to_tonie(creative_tonie, upload_request.fileId, title)
+        self.add_chapter_to_tonie(creative_tonie, fileId, title)
+
+    def reset_chapters_with_file_to_tonie(self, creative_tonie: CreativeTonie, file: Path | str, title: str) -> None:
+        """Add file to toniecloud and reset chapters to tonie.
+
+        Args:
+            creative_tonie (CreativeTonie): The tonie on which the file gets uploaded and should replace chapters
+            file (Path | str): The path of the file
+            title (str): the title for the chapter
+
+        Returns:
+            boolean: True if file was successful uploaded and chpaters reset.
+        """
+
+        # request upload to amazon s3
+        fileId = self.upload_file_to_amazon_s3(file)
+        # initialize new chapter
+        chapter = dict(title=title, file=fileId)
+
+        url = f"households/{creative_tonie.householdId}/creativetonies/{creative_tonie.id}"
+        self._patch(url=url, data={"chapters": [chapter]})
 
     def add_chapter_to_tonie(self, creative_tonie: CreativeTonie, file_id: str, title: str) -> None:
         """Add a chapter to a given tonie with file_id and title.
@@ -172,3 +228,13 @@ class TonieAPI:
         """
         url = f"households/{creative_tonie.householdId}/creativetonies/{creative_tonie.id}"
         self._patch(url=url, data={"chapters": []})
+
+    def change_name_of_tonie(self, creative_tonie: CreativeTonie, name: str) -> None:
+        """Change the name of given tonie.
+
+        Args:
+            creative_tonie (CreativeTonie): The Tonie to change the name for.
+            name (str): A String with the new name.
+        """
+        url = f"households/{creative_tonie.householdId}/creativetonies/{creative_tonie.id}"
+        self._patch(url=url, data={"name": name})
