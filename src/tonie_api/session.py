@@ -30,5 +30,5 @@ class TonieCloudSession(requests.Session):
             "username": username,
             "password": password,
         }
-        response = requests.post(self.OPENID_CONNECT, data=data, timeout=15)
+        response = requests.post(self.OPENID_CONNECT, data=data, timeout=30)
         return response.json()["access_token"]
