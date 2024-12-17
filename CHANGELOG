@@ -1,5 +1,115 @@
 # Changelog
 
+## v0.1.2 (2024-12-17)
+
+### Fix
+
+- Fix: print error (#112)
+
+* fix: print error
+* build: fix configs
+* build: drop support for 3.10 ([`44f0ba1`](https://github.com/Wilhelmsson177/tonie-api/commit/44f0ba190f6f50e1b8c6bd750ae767885cf63ecc))
+
+### Unknown
+
+- Merge pull request #105 from wilhelmsson177/dependabot/github_actions/python-semantic-release/python-semantic-release-9.7.2
+
+chore(deps): bump python-semantic-release/python-semantic-release from 9.1.0 to 9.7.2 ([`e671c2d`](https://github.com/Wilhelmsson177/tonie-api/commit/e671c2d1298b5abc5592bfed77484ba44cb4226e))
+- Merge pull request #106 from wilhelmsson177/dependabot/pip/ruff-0.4.4
+
+chore(deps-dev): bump ruff from 0.1.13 to 0.4.4 ([`974f55f`](https://github.com/Wilhelmsson177/tonie-api/commit/974f55fb57976f457f4e86e1341f02a26c73363b))
+- Merge pull request #108 from seji64/main
+
+increase timeout on session creation ([`4a67c6e`](https://github.com/Wilhelmsson177/tonie-api/commit/4a67c6e9f14c00560812d5a62a6aa86af377c400))
+- Make timeout configureable and try to handle timeout a bit better ([`7a9c806`](https://github.com/Wilhelmsson177/tonie-api/commit/7a9c806dfdf3d9ad9699b4ae51f5d6370a72abd6))
+- Increase timeout
+
+maybe the started running everything on rpi&#39;s or something 🙄 ([`64fd319`](https://github.com/Wilhelmsson177/tonie-api/commit/64fd3190f9fde9cad865b15ce18e2233778901cc))
+- Merge pull request #68 from wilhelmsson177/dependabot/github_actions/python-semantic-release/python-semantic-release-9.1.0
+
+chore(deps): bump python-semantic-release/python-semantic-release from 8.7.2 to 9.1.0 ([`25fe610`](https://github.com/Wilhelmsson177/tonie-api/commit/25fe610d73df34439c1e0f2c4e8cfb6a965dd3a7))
+- Merge pull request #67 from wilhelmsson177/dependabot/pip/responses-0.25.0
+
+chore(deps-dev): bump responses from 0.23.3 to 0.25.0 ([`ac8d524`](https://github.com/Wilhelmsson177/tonie-api/commit/ac8d52430499e4a5edadc0219e6b94dc8366fc16))
+- Merge pull request #66 from wilhelmsson177/dependabot/pip/black-24.2.0
+
+chore(deps-dev): bump black from 23.12.1 to 24.2.0 ([`a7e75dd`](https://github.com/Wilhelmsson177/tonie-api/commit/a7e75dd101eff171bc69f5be6c36fe9c684b8bb3))
+- Merge pull request #59 from wilhelmsson177/dependabot/pip/pydantic-2.6.1
+
+chore(deps): bump pydantic from 2.4.2 to 2.6.1 ([`ecb4b00`](https://github.com/Wilhelmsson177/tonie-api/commit/ecb4b005304f573d2e1ac4dd78b09fcd48d567a4))
+- Merge pull request #61 from wilhelmsson177/dependabot/pip/sphinx-rtd-theme-2.0.0
+
+chore(deps-dev): bump sphinx-rtd-theme from 1.3.0 to 2.0.0 ([`834ef3c`](https://github.com/Wilhelmsson177/tonie-api/commit/834ef3cce0fed4e155f2a6bc4c0b35b99adab113))
+- Merge pull request #62 from wilhelmsson177/dependabot/pip/pytest-8.0.0
+
+chore(deps-dev): bump pytest from 7.4.4 to 8.0.0 ([`c9e09ac`](https://github.com/Wilhelmsson177/tonie-api/commit/c9e09ac5100199feb3a8f235de916d50878a7e53))
+- Merge pull request #63 from wilhelmsson177/dependabot/github_actions/codecov/codecov-action-4
+
+chore(deps): bump codecov/codecov-action from 3 to 4 ([`2cf6876`](https://github.com/Wilhelmsson177/tonie-api/commit/2cf68766c324b4af4bf6a2010e8e0e4aff553608))
+- Merge pull request #65 from wilhelmsson177/dependabot/github_actions/pre-commit/action-3.0.1
+
+chore(deps): bump pre-commit/action from 3.0.0 to 3.0.1 ([`6312d4a`](https://github.com/Wilhelmsson177/tonie-api/commit/6312d4abf7a2b98e5547657796bcb8bac5c00f3a))
+- Merge pull request #50 from wilhelmsson177/dependabot/pip/black-23.12.1
+
+chore(deps-dev): bump black from 23.9.1 to 23.12.1 ([`306d171`](https://github.com/Wilhelmsson177/tonie-api/commit/306d1714db6a2d63e6875c9b7c7527b494359b6c))
+- Merge pull request #45 from wilhelmsson177/dependabot/github_actions/actions/setup-python-5
+
+chore(deps): bump actions/setup-python from 4 to 5 ([`bde1637`](https://github.com/Wilhelmsson177/tonie-api/commit/bde1637acd8a79951b9b8260841bef0af9d3c9e2))
+- Merge pull request #29 from wilhelmsson177/dependabot/pip/urllib3-2.0.7
+
+chore(deps): bump urllib3 from 2.0.6 to 2.0.7 ([`41f74fc`](https://github.com/Wilhelmsson177/tonie-api/commit/41f74fc53f384e038c43e407d5fcd4f1075df02b))
+- Merge pull request #52 from wilhelmsson177/dependabot/pip/pytest-7.4.4
+
+chore(deps-dev): bump pytest from 7.4.2 to 7.4.4 ([`533f8b7`](https://github.com/Wilhelmsson177/tonie-api/commit/533f8b7c7cf511bf755bb934554ba5f12250ee36))
+- Merge pull request #55 from wilhelmsson177/dependabot/pip/jinja2-3.1.3
+
+chore(deps-dev): bump jinja2 from 3.1.2 to 3.1.3 ([`e5854d0`](https://github.com/Wilhelmsson177/tonie-api/commit/e5854d0ec7d6be0f3da5e9ed23aac5c0ea27a618))
+- Merge pull request #54 from wilhelmsson177/dependabot/github_actions/python-semantic-release/python-semantic-release-8.7.2
+
+chore(deps): bump python-semantic-release/python-semantic-release from 8.1.1 to 8.7.2 ([`84ad2ae`](https://github.com/Wilhelmsson177/tonie-api/commit/84ad2ae04100dba50a0930c22294b336d32660ea))
+- Merge pull request #56 from wilhelmsson177/dependabot/pip/ruff-0.1.13
+
+chore(deps-dev): bump ruff from 0.0.292 to 0.1.13 ([`174e717`](https://github.com/Wilhelmsson177/tonie-api/commit/174e7178dca359fb7b3af044270d367075baf9e2))
+- Merge pull request #57 from wilhelmsson177/dependabot/github_actions/wagoid/commitlint-github-action-5.4.5
+
+chore(deps): bump wagoid/commitlint-github-action from 5.4.3 to 5.4.5 ([`80c8ef2`](https://github.com/Wilhelmsson177/tonie-api/commit/80c8ef259d6696295a2edda654da989262674fe2))
+- Merge pull request #25 from wilhelmsson177/dependabot/pip/pydantic-2.4.2
+
+chore(deps): bump pydantic from 2.3.0 to 2.4.2 ([`11144b8`](https://github.com/Wilhelmsson177/tonie-api/commit/11144b8402e100ee487ce48b0e0697e681aa1f1f))
+- Merge pull request #26 from wilhelmsson177/dependabot/pip/urllib3-2.0.6
+
+chore(deps): bump urllib3 from 2.0.4 to 2.0.6 ([`9444588`](https://github.com/Wilhelmsson177/tonie-api/commit/94445885dfb69f156ca6b0531559f6e608e9dbdd))
+- Merge pull request #27 from wilhelmsson177/dependabot/pip/ruff-0.0.292
+
+chore(deps-dev): bump ruff from 0.0.290 to 0.0.292 ([`1973779`](https://github.com/Wilhelmsson177/tonie-api/commit/19737794b7bb7c9230a59f296c9f853966d9017a))
+- Merge pull request #23 from wilhelmsson177/dependabot/github_actions/python-semantic-release/python-semantic-release-8.1.1
+
+chore(deps): bump python-semantic-release/python-semantic-release from 8.0.8 to 8.1.1 ([`e7d5c21`](https://github.com/Wilhelmsson177/tonie-api/commit/e7d5c211813c2586edec4f11b2e9abf5d4394610))
+- Merge pull request #21 from wilhelmsson177/dependabot/pip/sphinx-7.2.6
+
+chore(deps-dev): bump sphinx from 7.2.5 to 7.2.6 ([`df7696c`](https://github.com/Wilhelmsson177/tonie-api/commit/df7696cd3c4ea68391bd799a1ba93a4cef70484a))
+- Merge pull request #19 from wilhelmsson177/dependabot/pip/pytest-7.4.2
+
+chore(deps-dev): bump pytest from 7.4.1 to 7.4.2 ([`5e53c14`](https://github.com/Wilhelmsson177/tonie-api/commit/5e53c141faca2a4045ae83c7e4499ca88958aa37))
+- Merge pull request #18 from wilhelmsson177/dependabot/github_actions/actions/checkout-4
+
+chore(deps): bump actions/checkout from 3 to 4 ([`48d45bd`](https://github.com/Wilhelmsson177/tonie-api/commit/48d45bd132d11d1ec831c858b01adb9608d1aa08))
+- Merge pull request #20 from wilhelmsson177/dependabot/pip/black-23.9.1
+
+chore(deps-dev): bump black from 23.7.0 to 23.9.1 ([`711c4cf`](https://github.com/Wilhelmsson177/tonie-api/commit/711c4cf727d954c8a8fd42a911511530d341ca2b))
+- Merge pull request #22 from wilhelmsson177/dependabot/pip/ruff-0.0.290
+
+chore(deps-dev): bump ruff from 0.0.286 to 0.0.290 ([`0522ec8`](https://github.com/Wilhelmsson177/tonie-api/commit/0522ec851add147f475d98e399b94a3838a9dbd0))
+- Merge pull request #16 from wilhelmsson177/dependabot/pip/sphinx-7.2.5
+
+chore(deps-dev): bump sphinx from 7.2.4 to 7.2.5 ([`4da1378`](https://github.com/Wilhelmsson177/tonie-api/commit/4da137818cc0cecf4c8f1e23991d40ad87c71540))
+- Merge pull request #15 from wilhelmsson177/dependabot/pip/pytest-7.4.1
+
+chore(deps-dev): bump pytest from 7.4.0 to 7.4.1 ([`cae4421`](https://github.com/Wilhelmsson177/tonie-api/commit/cae442126a5a3baa01572dce435c4b500d573562))
+- Merge pull request #13 from wilhelmsson177/dependabot/pip/sphinx-7.2.4
+
+chore(deps-dev): bump sphinx from 7.2.3 to 7.2.4 ([`34abe61`](https://github.com/Wilhelmsson177/tonie-api/commit/34abe616373f44be8401d05c9546ce9ed42a25b2))
+
 ## v0.1.1 (2023-08-28)
 
 ### Unknown
