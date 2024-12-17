@@ -21,7 +21,7 @@ chore(deps-dev): bump ruff from 0.1.13 to 0.4.4 ([`974f55f`](https://github.com/
 - Merge pull request #108 from seji64/main
 
 increase timeout on session creation ([`4a67c6e`](https://github.com/Wilhelmsson177/tonie-api/commit/4a67c6e9f14c00560812d5a62a6aa86af377c400))
-- Make timeout configureable and try to handle timeout a bit better ([`7a9c806`](https://github.com/Wilhelmsson177/tonie-api/commit/7a9c806dfdf3d9ad9699b4ae51f5d6370a72abd6))
+- Make timeout configurable and try to handle timeout a bit better ([`7a9c806`](https://github.com/Wilhelmsson177/tonie-api/commit/7a9c806dfdf3d9ad9699b4ae51f5d6370a72abd6))
 - Increase timeout
 
 maybe the started running everything on rpi&#39;s or something 🙄 ([`64fd319`](https://github.com/Wilhelmsson177/tonie-api/commit/64fd3190f9fde9cad865b15ce18e2233778901cc))
