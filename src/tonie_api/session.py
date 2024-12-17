@@ -1,7 +1,11 @@
 """The module of the Toniecloud session."""
-import requests
-from requests.exceptions import Timeout, RequestException
+import logging
 
+import requests
+from requests.exceptions import RequestException, Timeout
+
+log = logging.getLogger(__name__)
+log.addHandler(logging.NullHandler())
 
 class TonieCloudSession(requests.Session):
     """A regular restss session to the TonieCloud REST API."""
@@ -37,7 +41,8 @@ class TonieCloudSession(requests.Session):
             response.raise_for_status()
             return response.json().get("access_token")
         except Timeout:
-            print(f"Request to acquire token timed out.")
+            log.exception("Request to acquire token timed out.")
         except RequestException as e:
-            print(f"An error occurred while acquiring the token: {e}")
+            msg = f"An error occurred while acquiring the token: {e}"
+            log.exception(msg)
         return None

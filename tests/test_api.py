@@ -2,6 +2,7 @@ import datetime
 
 import pytest
 import responses
+
 from tonie_api.api import TonieAPI
 from tonie_api.models import Config, CreativeTonie, User
 
@@ -69,7 +70,7 @@ def test_creative_tonie():
     household = tonie_api.get_households()[0]
     creative_tonie = tonie_api.get_all_creative_tonies_by_household(household)[1]
     assert isinstance(creative_tonie, CreativeTonie)
-    assert creative_tonie.lastUpdate == datetime.datetime(2023, 4, 2, 18, 32, 58, tzinfo=datetime.timezone.utc)
+    assert creative_tonie.lastUpdate == datetime.datetime(2023, 4, 2, 18, 32, 58, tzinfo=datetime.UTC)
     assert creative_tonie.secondsPresent == 2057
     assert creative_tonie.secondsRemaining == 3342
     assert creative_tonie.chaptersPresent == 12
