@@ -30,6 +30,8 @@ jobs:
         with:
           fetch-depth: 0
       - uses: wagoid/commitlint-github-action@v6.2.0
+        with:
+          configFile: .commitlintrc.yaml
 
   test:
     strategy:
